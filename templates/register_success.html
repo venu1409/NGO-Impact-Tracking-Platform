@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registered</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial;
+            margin-top: 100px;
+        }
+        .message {
+            font-size: 22px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>✅ You are successfully registered</h2>
+
+    <p class="message" id="redirectMessage">
+        You will be redirected to login page in 5 seconds...
+    </p>
+
+    <script>
+        let seconds = 5;
+        const message = document.getElementById("redirectMessage");
+
+        const timer = setInterval(function () {
+            seconds--;
+
+            message.textContent =
+                "You will be redirected to login page in " + seconds + " seconds...";
+
+            if (seconds <= 0) {
+                clearInterval(timer);
+                window.location.href = "/login";
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>All Projects</h2>
+
+{% if session.get("role") == "admin" %}
+<form action="/add_project" method="POST">
+    <input type="text" name="name" placeholder="Project Name" required>
+    <input type="number" name="goal" placeholder="Goal Amount" required>
+    <button>Create</button>
+</form>
+{% endif %}
+
+{% for p in projects %}
+<div class="card">
+    <h3>{{ p[1] }}</h3>
+    Goal: ₹{{ p[2] }} <br>
+    Collected: ₹{{ p[3] }} <br>
+    <a href="/project/{{ p[0] }}">View Details</a>
+</div>
+{% endfor %}
+
+{% endblock %}

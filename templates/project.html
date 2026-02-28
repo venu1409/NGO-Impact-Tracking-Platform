@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>{{ project[1] }}</h2>
+
+<div class="project-details">
+    <p><strong>Goal:</strong> ₹{{ project[2] }}</p>
+    <p><strong>Collected:</strong> ₹{{ project[3] }}</p>
+    <p><strong>Total Used:</strong> ₹{{ total_used }}</p>
+    <p><strong>Remaining:</strong> ₹{{ remaining }}</p>
+</div>
+
+<hr>
+
+<!-- ================= DONATION SECTION ================= -->
+
+{% if session.get("role") == "user" %}
+<div class="donation-box">
+    <h3>Donate to this Project</h3>
+    <form action="/donate/{{ project[0] }}" method="POST">
+        <input type="number" name="amount" placeholder="Enter donation amount" required>
+        <button type="submit">Donate</button>
+    </form>
+</div>
+<hr>
+{% endif %}
+
+<!-- ================= TRANSPARENCY UPDATES ================= -->
+
+<h3>Transparency Updates</h3>
+
+{% if updates %}
+    {% for u in updates %}
+    <div class="update-card">
+        <p>{{ u[2] }}</p>
+        <p><strong>Amount Used:</strong> ₹{{ u[3] }}</p>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>No updates yet.</p>
+{% endif %}
+
+<!-- ================= ADMIN ADD UPDATE ================= -->
+
+{% if session.get("role") == "admin" %}
+<hr>
+<div class="admin-update-box">
+    <h3>Add Transparency Update</h3>
+    <form action="/add_update/{{ project[0] }}" method="POST">
+        <textarea name="description" placeholder="Update description..." required></textarea>
+        <input type="number" name="amount" placeholder="Amount Used" required>
+        <button type="submit">Post Update</button>
+    </form>
+</div>
+{% endif %}
+
+{% endblock %}

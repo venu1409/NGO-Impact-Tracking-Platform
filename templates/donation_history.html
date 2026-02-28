@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Donation History</h2>
+
+{% if admin_view %}
+
+    {% for user in admin_data %}
+    <div class="admin-user-card">
+
+        <h3>
+            {{ user.email }}
+            {% if user.badge %}
+                <span class="badge">🏅 Top Donor</span>
+            {% endif %}
+        </h3>
+
+        {% if user.donations %}
+            <div class="donation-container">
+                {% for d in user.donations %}
+                <div class="donation-card admin-card">
+                    <p><strong>Project:</strong> {{ d[0] }}</p>
+                    <p>Donated: ₹{{ d[1] }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No donations yet.</p>
+        {% endif %}
+
+    </div>
+    <hr>
+    {% endfor %}
+
+{% else %}
+
+    {% if badge %}
+        <div class="badge-box">
+            <h3>🏅 Congratulations! You Earned Top Donor Badge</h3>
+            <img src="https://cdn-icons-png.flaticon.com/512/2583/2583344.png" width="100">
+        </div>
+    {% endif %}
+
+    {% if donations %}
+        <div class="donation-container">
+            {% for d in donations %}
+            <div class="donation-card">
+                <h3>{{ d[0] }}</h3>
+                <p class="amount">₹{{ d[1] }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No donations yet.</p>
+    {% endif %}
+
+{% endif %}
+
+{% endblock %}
